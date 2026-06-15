@@ -1,0 +1,21 @@
+body{
+    font-family: Arial;
+    margin: 0;
+}
+
+nav{
+    background-color: lightblue;
+    padding: 20px;
+}
+
+a{
+    margin-right: 15px;
+}
+
+.success{
+    color: green;
+}
+
+.error{
+    color: red;
+}

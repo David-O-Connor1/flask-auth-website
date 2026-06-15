@@ -20,6 +20,7 @@ def login_required(view):
     @wraps(view)
     def wrapped_view(*args, **kwargs):
         if g.user is None:
+            flash("Please log in to access that page","error")
             return redirect(url_for("login",next = request.url))
         return view(*args, **kwargs)
     return wrapped_view
@@ -48,7 +49,7 @@ def register():
         else:
             db.execute("""INSERT INTO users(username,password) VALUES (?, ?)""",(user,generate_password_hash(password)))
             db.commit()
-            flash("Registration successful! Please log in")
+            flash("Registration successful! Please log in","success")
             return redirect(url_for("login"))
     return render_template("register.html",form=form)
 
@@ -67,6 +68,7 @@ def login():
         else:
             session.clear()
             session["user"] = user
+            flash("Logged in successfully!","success")
             next_page = request.args.get("next")
             if not next_page:
                 next_page = url_for("home")
@@ -77,6 +79,6 @@ def login():
 @login_required
 def logout():
     session.clear()
-    flash("You have been logged out")
+    flash("You have been logged out","success")
     return redirect(url_for("home"))
     
